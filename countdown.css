@@ -8,35 +8,35 @@ body {
   .base-timer {
     vertical-align: middle;
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     display: inline-block;
   }
   
   .base-timer__svg {
-    float: left;
-    transform: scaleX(-1);
+    /* float: left; */
+    transform: scaleX(1);
   }
   
   .base-timer__circle {
     fill: all;
-    stroke: none;
+    /* stroke: none; */
   }
   
   .base-timer__path-elapsed {
-    stroke-width: 7px;
-    stroke: none;
+    /* stroke-width: 7px; */
+    /* stroke: none; */
+    fill: black;
   }
   
   .base-timer__path-remaining {
-    stroke-linecap: round;
+    /* stroke-linecap: round; */
     transform: rotate(90deg);
     transform-origin: center;
     transition: 1s linear all;
     fill-rule: nonzero;
-    stroke-width: 10px;
     stroke: currentColor;
-    fill: currentColor;
+    fill: transparent;
   }
   
   .base-timer__path-remaining.green {
@@ -63,12 +63,11 @@ body {
     vertical-align: center;
     /* position: relative; */
     display: inline-block;
-    font-size: 48px;
+    font-size: 12px;
     background: black;
     border-radius: 5px;
-    padding: 10px;
     color: white;
-    position: relative;
-    top: 10px;
+    padding: 3px 3px;
     left: -20px;
+    position: relative;
   }

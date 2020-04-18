@@ -1,8 +1,12 @@
 // Credit: Mateusz Rybczonec
 
-const FULL_DASH_ARRAY = 283;
 const WARNING_THRESHOLD = 10;
 const ALERT_THRESHOLD = 5;
+
+const TIME_LIMIT = 20;
+const TIMER_RADIUS = 100;
+const SVG_VIEW = TIMER_RADIUS*4;
+const FULL_DASH_ARRAY = Math.ceil(2*Math.PI*TIMER_RADIUS);
 
 const COLOR_CODES = {
     info: {
@@ -18,32 +22,32 @@ const COLOR_CODES = {
     }
 };
 
-const TIME_LIMIT = 20;
 let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
 let remainingPathColor = COLOR_CODES.info.color;
 
 document.getElementById("app").innerHTML = `
-<div class="base-timer">
-  <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<div class="base-timer" style="width: ${SVG_VIEW}px; height: ${SVG_VIEW}px">
+  <svg class="base-timer__svg" viewBox="0 0 ${SVG_VIEW} ${SVG_VIEW}" xmlns="http://www.w3.org/2000/svg">
     <g class="base-timer__circle">
-      <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+      <circle class="base-timer__path-elapsed" cx="${SVG_VIEW/2}" cy="${SVG_VIEW/2}" r="${TIMER_RADIUS*2}"></circle>
       <path
         id="base-timer-path-remaining"
-        stroke-dasharray="283"
+        stroke-dasharray="${FULL_DASH_ARRAY}"
+        stroke-width=${TIMER_RADIUS*2}
         class="base-timer__path-remaining ${remainingPathColor}"
         d="
-          M 50, 50
-          m -45, 0
-          a 45,45 0 1,0 90,0
-          a 45,45 0 1,0 -90,0
+          M ${SVG_VIEW/2}, ${SVG_VIEW/2}
+          m ${-TIMER_RADIUS}, 0
+          a ${TIMER_RADIUS},${TIMER_RADIUS} 0 1,0 ${TIMER_RADIUS*2},0
+          a ${TIMER_RADIUS},${TIMER_RADIUS} 0 1,0 ${-TIMER_RADIUS*2},0
         "
       ></path>
     </g>
   </svg>
 </div>
-<div id="base-timer-label" class="base-timer__label">${formatTime(
+<div id="base-timer-label" class="base-timer__label" style="font-size: ${TIMER_RADIUS/4}px">${formatTime(
     timeLeft
   )}</div>
 `;
@@ -52,11 +56,6 @@ startTimer();
 
 function onTimesUp() {
     clearInterval(timerInterval);
-    timePassed = 0;
-    timeLeft = TIME_LIMIT;
-    timerInterval = null;
-    remainingPathColor = COLOR_CODES.info.color;
-    startTimer();
 }
 
 function startTimer() {
@@ -117,7 +116,7 @@ function calculateTimeFraction() {
 function setCircleDasharray() {
     const circleDasharray = `${(
     calculateTimeFraction() * FULL_DASH_ARRAY
-  ).toFixed(0)} 283`;
+  ).toFixed(0)} ${FULL_DASH_ARRAY}`;
     document
         .getElementById("base-timer-path-remaining")
         .setAttribute("stroke-dasharray", circleDasharray);
