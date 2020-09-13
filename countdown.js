@@ -3,8 +3,9 @@
 const WARNING_THRESHOLD = 10;
 const ALERT_THRESHOLD = 5;
 
-const TIME_LIMIT = 20;
-const TIMER_RADIUS = 100;
+const TIME_LIMIT = 200;
+const TIMER_RADIUS = 20;
+const FONT_SIZE = TIMER_RADIUS < 10 ? 10 : TIMER_RADIUS;
 const SVG_VIEW = TIMER_RADIUS*4;
 const FULL_DASH_ARRAY = Math.ceil(2*Math.PI*TIMER_RADIUS);
 
@@ -29,7 +30,7 @@ let remainingPathColor = COLOR_CODES.info.color;
 
 document.getElementById("app").innerHTML = `
 <div class="base-timer" style="width: ${SVG_VIEW}px; height: ${SVG_VIEW}px">
-  <svg class="base-timer__svg" viewBox="0 0 ${SVG_VIEW} ${SVG_VIEW}" xmlns="http://www.w3.org/2000/svg">
+  <svg class="base-timer__svg" xmlns="http://www.w3.org/2000/svg">
     <g class="base-timer__circle">
       <circle class="base-timer__path-elapsed" cx="${SVG_VIEW/2}" cy="${SVG_VIEW/2}" r="${TIMER_RADIUS*2}"></circle>
       <path
@@ -47,7 +48,7 @@ document.getElementById("app").innerHTML = `
     </g>
   </svg>
 </div>
-<div id="base-timer-label" class="base-timer__label" style="font-size: ${TIMER_RADIUS/4}px">${formatTime(
+<div id="base-timer-label" class="base-timer__label" style="font-size: ${FONT_SIZE}px">${formatTime(
     timeLeft
   )}</div>
 `;
